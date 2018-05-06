@@ -39,7 +39,7 @@ private:
 
 	// Raycasting reach
 	UPROPERTY(EditAnywhere)
-		float LineTraceRange = 1000000.f;
+		float LineTraceRange = 100000.f;
 
 	UPROPERTY(EditAnywhere)
 		float CrossHairXLocation = 0.5f;

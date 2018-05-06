@@ -18,14 +18,14 @@ class BATTLETANKS_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-private:
-
+public:
 	// allow override of BeginPlay function
 	virtual void BeginPlay() override;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
+
+private:
 	// get AI controller instance from owning player controller
 	ATank* GetAIController() const;
 
