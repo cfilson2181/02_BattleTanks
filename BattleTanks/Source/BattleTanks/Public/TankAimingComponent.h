@@ -5,7 +5,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
-//#include "Runtime/Engine/Classes/GameFramework/Actor.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+
 #include "TankAimingComponent.generated.h"
 
 
@@ -18,19 +19,16 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	// Creates a barrel reference that can be obtained in the blueprint constructor
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	// TODO add something
 
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	// Aim the tank barrel
+	void AimAt(FVector WorldSpaceAim, float LaunchSpeed);
 
-	void AimAt(FVector WorldSpaceAim);
-
-protected:
-
-public:	
+	// Move the tank turret at the direction that should be aimed
+	void MoveBarrel(FVector AimDirection);
 
 private:
 	UStaticMeshComponent* Barrel = nullptr;

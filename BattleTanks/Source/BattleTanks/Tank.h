@@ -38,5 +38,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+private:
+	// Set firing velocity
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float LaunchSpeed = 100000.f; //sensible starting value of 1000 m/s
+
 	
 };
