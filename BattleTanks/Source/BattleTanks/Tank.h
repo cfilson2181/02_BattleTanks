@@ -8,6 +8,8 @@
 
 #include "Tank.generated.h"
 
+class UTankBarrel;
+
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
 {
@@ -21,7 +23,7 @@ public:
 
 	// create a blueprint callable class for blueprint scripting
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 
 protected:
