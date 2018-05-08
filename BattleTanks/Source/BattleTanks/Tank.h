@@ -19,6 +19,7 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	// Method for aiming barrel at reticle
 	void AimAt(FVector HitLocation);
 
 	// create a blueprint callable class for blueprint scripting the barrel
@@ -28,6 +29,9 @@ public:
 	// Create a blueprint callable class for blueprint scripting the turret
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
@@ -43,7 +47,7 @@ public:
 private:
 	// Set firing velocity
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 100000.f; //sensible starting value of 1000 m/s
+		float LaunchSpeed = 4000.f; //sensible starting value of 1000 m/s
 
 	
 };

@@ -9,25 +9,9 @@ void ATankAIController::BeginPlay()
 
 	// Get ai controller pawn and report name to log if it exists
 	auto AIController = GetAIController();
-	if (AIController)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI Controller possesses %s"), *AIController->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("AI controller not found"));
-	}
 
 	// Get plaer controlled pawn and report name to log if it exists
 	auto PlayerTank = GetPlayerTank();
-	if (PlayerTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player tank is %s"), *PlayerTank->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Player tank is not preset"));
-	}
 }
 
 void ATankAIController::Tick(float DeltaTime)
