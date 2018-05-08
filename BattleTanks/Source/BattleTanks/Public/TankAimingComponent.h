@@ -10,7 +10,7 @@
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel; //Forward declaration - allows you to reference this class without creating a chain of dependency
-
+class UTankTurret; //Forward declaration 
 
 /// Holds Barrel's properties and Elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -25,14 +25,16 @@ public:
 	// Creates a barrel reference that can be obtained in the blueprint constructor
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-	// TODO add something
+	// Creates a turret reference that can be obtained in the blueprint constructor
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 	// Aim the tank barrel
 	void AimAt(FVector WorldSpaceAim, float LaunchSpeed);
 
-	// Move the tank turret at the direction that should be aimed
+	// Move the tank barrel at the direction that should be aimed
 	void MoveBarrel(FVector AimDirection);
 
 private:
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 };

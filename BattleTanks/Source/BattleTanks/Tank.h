@@ -21,18 +21,18 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	// create a blueprint callable class for blueprint scripting
+	// create a blueprint callable class for blueprint scripting the barrel
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	// Create a blueprint callable class for blueprint scripting the turret
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Begin play
 	virtual void BeginPlay() override;
 
