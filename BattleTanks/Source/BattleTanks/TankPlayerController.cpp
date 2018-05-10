@@ -48,21 +48,21 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 	
 	// "De-project" the screen position of the crosshair to a world direction
-	FVector LookDirection;
-	if (GetLookDirection(ScreenLocation, LookDirection))
+	FVector LookDirection, WorldLocation;
+	if (GetLookDirection(ScreenLocation, LookDirection, WorldLocation))
 	{
 		// Line-trace along that look direction, and see what we hit (up to max range) out from the reticle and look for the first thing that is hit
-		GetLookVectorHitLocation(OutHitLocation, LookDirection);
+		GetLookVectorHitLocation(OutHitLocation, LookDirection, WorldLocation);
 	}
 
 	return true;
 }
 
 /// Get the look direction (absolute) in the world of the crosshair
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection, FVector& WorldLocation) const
 {
 	// placeholder variable
-	FVector WorldLocation;
+	//FVector WorldLocation;
 
 	// "Deproject" the screen position of the crosshair in the world
 	return DeprojectScreenPositionToWorld(
@@ -74,21 +74,29 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 }
 
 
-bool ATankPlayerController::GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection) const
+bool ATankPlayerController::GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection, FVector WorldLocation) const
 {
 	// create hit result placeholder
 	FHitResult HitResult;
-	auto StartLocation = PlayerCameraManager->GetCameraLocation();
-	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+	//auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = WorldLocation + (LookDirection * LineTraceRange);
 	
 	// If there is an object hit, then it returns true and updates the location of the hit object
 	if (GetWorld()->LineTraceSingleByChannel(
 		HitResult,
-		StartLocation,
+		WorldLocation,
 		EndLocation,
 		ECollisionChannel::ECC_Visibility)
 		)
 	{
+		//DrawDebugLine(
+		//	GetWorld(),
+		//	WorldLocation,
+		//	EndLocation,
+		//	FColor(255,0,0),
+		//	false, -1, 0,
+		//	12.333
+		//	);
 		HitLocation = HitResult.Location;
 		return true;
 	}

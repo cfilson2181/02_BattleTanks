@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
+
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -23,6 +25,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Method for launching the projectile once it is spawned
+	void LaunchProjectile(float LaunchSpeed);
+
+private:
+	// Create a pointer to a projectile movement component
+	UProjectileMovementComponent* ProjectileMovement = nullptr;	
 	
-	
+
 };

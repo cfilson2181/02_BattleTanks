@@ -10,6 +10,9 @@
 #include "Runtime/Core/Public/Math/Vector2D.h"
 #include "Runtime/Engine/Public/CollisionQueryParams.h"
 
+#include "Runtime/Engine/Public/DrawDebugHelpers.h"
+#include "Runtime/Core/Public/Math/Color.h"
+
 #include "TankPlayerController.generated.h" // must be the last "include"
 
 /**
@@ -32,9 +35,9 @@ private:
 
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection, FVector& WorldLocation) const;
 
-	bool GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection) const;
+	bool GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection, FVector WorldLocation) const;
 
 
 	// Raycasting reach
