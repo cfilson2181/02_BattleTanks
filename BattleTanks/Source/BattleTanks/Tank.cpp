@@ -38,6 +38,9 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	
+	// Keep local reference to barrel
+	Barrel = BarrelToSet;
 }
 
 /// Set tank turret reference
@@ -50,5 +53,17 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet)
 void ATank::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("FIRE!!!"));
+	
+	// If there is no barrel instantiated, skip the rest of the code
+	if (!Barrel) { return; }
+
+	// Spawn a projectile in the game
+	auto ProjectileSpawnParameters = FActorSpawnParameters();
+	GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBlueprint, 
+		Barrel->GetSocketLocation(FName("Projectile")),
+		Barrel->GetSocketRotation(FName("Projectile"))
+		);
+
 	return;
 }
