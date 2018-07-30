@@ -32,3 +32,10 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+// Aim the tank barrel at a hit location
+void ATank::AimAt(FVector HitLocation)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"), *(GetName()), *(HitLocation.ToString()));
+	return;
+}
+

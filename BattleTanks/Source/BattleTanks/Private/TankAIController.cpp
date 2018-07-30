@@ -5,6 +5,8 @@
 /// INIT ROUTINE for AI tank
 void ATankAIController::BeginPlay()
 {
+	Super::BeginPlay();
+
 	auto AIControllerTank = GetAIController();
 	auto PlayerTank = GetPlayerTank();
 
@@ -23,6 +25,22 @@ void ATankAIController::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("AI Controller %s is has found player %s"), *(AIControllerTank->GetName()), *(PlayerTank->GetName()));
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (!GetAIController()) { return; }
+	
+	if (GetPlayerTank())
+	{
+		// TODO: Move towards player
+
+		// Aim towards player
+		GetAIController()->AimAt(GetPlayerTank()->GetActorLocation());
+
+		// Fire!
+	}
+}
 
 /// Get the tank owned by the ai controller
 ATank* ATankAIController::GetAIController() const
