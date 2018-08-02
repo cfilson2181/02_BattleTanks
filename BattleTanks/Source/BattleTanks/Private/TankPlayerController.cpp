@@ -71,35 +71,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
 			OutHitLocation = HitResult.Location;
 			return true;
 		}
-		//if (GetLookVectorHitLocation(LookLocation, LookDirection, HitResult))
-		//{
-		//	OutHitLocation = HitResult.Location;
-		//	return true;
-		//}
 	}
-
 	OutHitLocation = FVector(0);
 	return false;
-}
-
-/// Get the unit vector of the player camera  view
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookLocation, FVector& LookDirection) const
-{
-	return DeprojectScreenPositionToWorld(
-		ScreenLocation.X,
-		ScreenLocation.Y,
-		LookLocation,
-		LookDirection
-	);
-}
-
-/// Ray cast out from crosshair and see if you hit anything
-bool ATankPlayerController::GetLookVectorHitLocation(FVector LookLocation, FVector LookDirection, FHitResult& HitResult) const
-{
-	return GetWorld()->LineTraceSingleByChannel(
-		HitResult,
-		LookLocation,
-		LookLocation + LookDirection * LineTraceRange,
-		ECollisionChannel::ECC_Visibility
-	);
 }

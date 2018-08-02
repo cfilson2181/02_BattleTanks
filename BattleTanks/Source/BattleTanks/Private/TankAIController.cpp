@@ -22,7 +22,7 @@ void ATankAIController::BeginPlay()
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("AI Controller %s is has found player %s"), *(AIControllerTank->GetName()), *(PlayerTank->GetName()));
+	UE_LOG(LogTemp, Warning, TEXT("AI Controller %s has found player %s"), *(AIControllerTank->GetName()), *(PlayerTank->GetName()));
 }
 
 void ATankAIController::Tick(float DeltaTime)
