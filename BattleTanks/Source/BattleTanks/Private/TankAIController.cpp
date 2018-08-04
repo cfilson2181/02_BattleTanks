@@ -7,15 +7,14 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto AIControllerTank = GetAIController();
-	auto PlayerTank = GetPlayerTank();
+	AIControllerTank = Cast<ATank>(GetPawn());
+	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
 	if (!AIControllerTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("AI Controller not possessing tank"));
 		return;
 	}
-
 	if (!PlayerTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Player Controller is missing"));
@@ -29,34 +28,18 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!GetAIController()) { return; }
+	if (!AIControllerTank) { return; }
 	
-	if (GetPlayerTank())
+	if (PlayerTank)
 	{
 		// TODO: Move towards player
 
 		// Aim towards player
-		GetAIController()->AimAt(GetPlayerTank()->GetActorLocation());
+		AIControllerTank->AimAt(PlayerTank->GetActorLocation());
 
-		// Fire!
+		// Fire every frame
+		AIControllerTank->Fire();
 	}
-}
-
-/// Get the tank owned by the ai controller
-ATank* ATankAIController::GetAIController() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-/// Get the player controlled tank
-ATank* ATankAIController::GetPlayerTank() const
-{
-	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-	// DO NOT RUN IF THERE IS NO PLAYER CONTROLLER
-	if (!PlayerPawn) { return nullptr; }
-
-	return Cast<ATank>(PlayerPawn);
 }
 
 

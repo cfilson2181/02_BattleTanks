@@ -9,6 +9,9 @@
 
 class UTankBarrel; //forward declaration
 class UTankTurret; //forward declaration
+class AProjectile; //forward declaration
+
+class UProjectileMovmentComponent;
 
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
@@ -19,13 +22,17 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret* TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Input)
+		void Fire();
+
+	void AimAt(FVector HitLocation);
+
 
 protected:
 	// Tank movement component
@@ -43,4 +50,16 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float LaunchSpeed = 10000.f; // TODO: find sensible default
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+		float ReloadTimeInSeconds = 3.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+		double LastFireTime = 0;
+
+	// local barrel reference for spawning projectiles
+	UTankBarrel* Barrel = nullptr;
 };

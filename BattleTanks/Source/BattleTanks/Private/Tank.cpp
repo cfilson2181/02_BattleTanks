@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-
+#include "TankBarrel.h"
+#include "Projectile.h"
 
 // Sets default values
 ATank::ATank()
@@ -11,6 +12,7 @@ ATank::ATank()
 
 	//No need to protect pointers because it is added in the constructor (will always fail)
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+
 }
 
 // Called when the game starts or when spawned
@@ -44,11 +46,37 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 // Set the turret reference object
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
+}
+
+// Fire a projectile
+void ATank::Fire()
+{
+	// Protect against a barrel reference that does not exist
+	if (!Barrel) { return; }
+
+	//// Determine if the tank has reloaded a new projectile since the last fire time
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (isReloaded)
+	{
+		// spawn the projectile in the world for launching
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+											ProjectileBlueprint,
+											Barrel->GetSocketLocation(FName("Projectile")),
+											Barrel->GetSocketRotation(FName("Projectile")));
+
+		//// Launch the projectile at the desired launch speed
+		Projectile->LaunchProjectile(LaunchSpeed);
+			
+		//// Update time of last launch to this frame
+		LastFireTime = FPlatformTime::Seconds();
+		UE_LOG(LogTemp, Warning, TEXT("Last fire time: %f"), LastFireTime);
+	}
 }
 
