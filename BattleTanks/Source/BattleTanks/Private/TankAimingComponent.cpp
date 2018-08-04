@@ -3,6 +3,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -60,6 +61,11 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+// Set the turret reference
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	Turret = TurretToSet;
+}
 
 // change the barrel rotation
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -69,12 +75,13 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Determine rotation speed 
 
 	// Calculate the rate of change in barrel speed to move the barrel in the tick to the right position
-	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
+	auto TargetRotation = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotation = AimDirection.Rotation();
-	auto DeltaRotator = AimAsRotation - BarrelRotation;
+	auto DeltaRotator = AimAsRotation - TargetRotation;
 	
 	// Move the barrel the right amount this frame
-	Barrel->Elevate(DeltaRotator.Pitch);	// TODO magic number
+	Barrel->Elevate(DeltaRotator.Pitch);	
+	Turret->Rotate(DeltaRotator.Yaw);		
 
 	// given a max elevation and the frame time
 }
